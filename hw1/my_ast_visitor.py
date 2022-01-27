@@ -7,12 +7,12 @@ import networkx as nx
 class MyASTVisitor(ast.NodeVisitor):
     def __init__(self):
         self.ast_graph = nx.DiGraph()
-        self.store = self.load = None
-        self.store_cnt = self.load_cnt = 0
+        self.__store = self.__load = None
+        self.__store_cnt = self.__load_cnt = 0
 
     def increase_cnt(self):
-        self.store_cnt += 1
-        self.load_cnt += 1
+        self.__store_cnt += 1
+        self.__load_cnt += 1
 
     def process_visit_result(self, node, node_to_visit):
         visit_res = self.visit(node_to_visit)
@@ -46,11 +46,11 @@ class MyASTVisitor(ast.NodeVisitor):
         ret_list = [str(node)]
         self.ast_graph.add_node(str(node), label=node.id, color='#009ACD', style='filled', shape='rect')
         ast.NodeVisitor.generic_visit(self, node)
-        if self.store is not None:
-            ret_list.append(str(self.store))
-        if self.load is not None:
-            ret_list.append(str(self.load))
-        self.load = self.store = None
+        if self.__store is not None:
+            ret_list.append(str(self.__store))
+        if self.__load is not None:
+            ret_list.append(str(self.__load))
+        self.__load = self.__store = None
         return ret_list
 
     def visit_Expr(self, node: _ast.Expr) -> Any:
@@ -96,16 +96,16 @@ class MyASTVisitor(ast.NodeVisitor):
         return [str(node)]
 
     def visit_Load(self, node: _ast.Load) -> Any:
-        self.ast_graph.add_node(str(node) + str(self.load_cnt), label="ctx=Load", color='#B8B8B8', style='filled',
+        self.ast_graph.add_node(str(node) + str(self.__load_cnt), label="ctx=Load", color='#B8B8B8', style='filled',
                                 shape='rect')
-        self.load = str(node) + str(self.load_cnt)
-        return [self.load]
+        self.__load = str(node) + str(self.__load_cnt)
+        return [self.__load]
 
     def visit_Store(self, node: _ast.Store) -> Any:
-        self.ast_graph.add_node(str(node) + str(self.store_cnt), label="ctx=Store", color='#B8B8B8', style='filled',
+        self.ast_graph.add_node(str(node) + str(self.__store_cnt), label="ctx=Store", color='#B8B8B8', style='filled',
                                 shape='rect')
-        self.store = str(node) + str(self.store_cnt)
-        return [self.store]
+        self.__store = str(node) + str(self.__store_cnt)
+        return [self.__store]
 
     def visit_Add(self, node: _ast.Add) -> Any:
         self.ast_graph.add_node(str(node), label="op=Add", color='#BA55D3', style='filled', shape='rect')
