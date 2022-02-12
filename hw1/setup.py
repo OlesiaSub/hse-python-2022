@@ -2,7 +2,7 @@ import setuptools
 
 setuptools.setup(
     name="sastvisualizer",
-    version="1.1.1",
+    version="1.1.2",
     author="OlesiaSub",
     author_email="lesya.sub@mail.ru",
     description="Python course hw1. AST visualizer.",

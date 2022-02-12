@@ -1,7 +1,7 @@
 import ast
 import inspect
 import networkx as nx
-from my_ast_visitor import MyASTVisitor
+from .my_ast_visitor import MyASTVisitor
 
 
 def fib_seq(n: int):
