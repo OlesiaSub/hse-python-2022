@@ -1,6 +1,7 @@
 import logging
 import os
 from functools import reduce
+from sastvisualizer.main import generate_ast
 
 
 def generate_latex_string(inp) -> str:
@@ -28,14 +29,19 @@ def generate_latex_string(inp) -> str:
                f"\\begin{{tabular}}{{{get_col_data()}}}\n" \
                f"{convert_to_string()}\n" \
                "\\end{tabular}\n" \
-               "\\end{center}\n" \
-               "\\end{document}\n"
+               "\\end{center}\n"
+
+    def get_ast_string():
+        generate_ast('artifacts/fib_ast.png')
+        return "\\begin{center}\n" \
+               "\\includegraphics[width=1\\textwidth]{artifacts/fib_ast.png}\n" \
+               "\\end{center}\n"
 
     if not check():
         logging.error("Incorrect input")
         os.system(exit(1))
 
-    return create_latex_with_env()
+    return create_latex_with_env() + get_ast_string() + "\\end{document}"
 
 
 def write_to_file(data):
