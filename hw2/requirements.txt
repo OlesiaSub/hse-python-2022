@@ -1,0 +1,4 @@
+networkx==2.6.3
+pydot==1.4.2
+numpy
+matplotlib
