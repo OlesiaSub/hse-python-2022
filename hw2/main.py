@@ -59,7 +59,7 @@ def create_latex():
     ]
     write_to_file(generate_latex_string(input_list))
     os.system("pdflatex -halt-on-error -output-directory artifacts artifacts/hw2.tex")
-    os.system("rm artifacts/hw2.aux artifacts/hw2.log")
+    os.system("rm artifacts/hw2.aux artifacts/hw2.log artifacts/fib_ast.png artifacts/hw2.tex")
 
 
 if __name__ == '__main__':
