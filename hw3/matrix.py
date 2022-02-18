@@ -46,7 +46,7 @@ class Matrix:
         self._validate_matrix(other.matrix)
         self._cmp_validate(other)
         matrix_rows = list(zip(*other.matrix))
-        res = [[sum(i * j for i, j in zip(row_a, col_b)) for col_b in matrix_rows] for row_a in self._matrix]
+        res = [[sum(i * j for i, j in zip(row, col)) for col in matrix_rows] for row in self._matrix]
         return Matrix(res)
 
     def __str__(self):
