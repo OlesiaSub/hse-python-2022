@@ -21,8 +21,6 @@ class Matrix:
                 raise ValueError("Dimensions of the given matrix differ")
 
     def _cmp_validate(self, other):
-        if not isinstance(other, Matrix):
-            raise Exception("Other is not an instance of Matrix class, unable to perform required operations")
         if (len(self._matrix[0]) != len(other.matrix[0])) or (len(self._matrix) != len(other.matrix)):
             raise Exception("Dimensions of matrices do not match")
 
@@ -30,16 +28,16 @@ class Matrix:
         res = []
         self._validate_matrix(other.matrix)
         self._cmp_validate(other)
-        for o, i in zip(other.matrix, range(len(other.matrix))):
-            res.append([o[j] + self._matrix[i][j] for j in range(len(o))])
+        for m, i in zip(other.matrix, range(len(other.matrix))):
+            res.append([m[j] + self._matrix[i][j] for j in range(len(m))])
         return Matrix(res)
 
     def __mul__(self, other):
         res = []
         self._validate_matrix(other.matrix)
         self._cmp_validate(other)
-        for o, i in zip(other.matrix, range(len(other.matrix))):
-            res.append([o[j] * self._matrix[i][j] for j in range(len(o))])
+        for m, i in zip(other.matrix, range(len(other.matrix))):
+            res.append([m[j] * self._matrix[i][j] for j in range(len(m))])
         return Matrix(res)
 
     def __matmul__(self, other):
