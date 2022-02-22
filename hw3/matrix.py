@@ -1,4 +1,18 @@
-class Matrix:
+from hw3.matrix_mixin import RepresentationMixin
+
+
+class MulMixin:
+
+    # sum of squares % prime number
+    def __hash__(self):
+        res = 0
+        mod = 10000019
+        for m in self._matrix:
+            res += sum(v * v for v in m)
+        return res % mod
+
+
+class Matrix(MulMixin, RepresentationMixin):
 
     @property
     def matrix(self):
@@ -13,6 +27,7 @@ class Matrix:
         self._matrix = []
         for m in n_matrix:
             self._matrix.append(m)
+        self._mul_cache = {}
 
     @staticmethod
     def _validate_matrix(matrix):
@@ -43,8 +58,12 @@ class Matrix:
     def __matmul__(self, other):
         self._validate_matrix(other.matrix)
         self._cmp_validate(other)
+        key = self.__hash__(), other.__hash__()
+        if key in self._mul_cache:
+            return self._mul_cache[key]
         matrix_rows = list(zip(*other.matrix))
         res = [[sum(i * j for i, j in zip(row, col)) for col in matrix_rows] for row in self._matrix]
+        self._mul_cache[key] = Matrix(res)
         return Matrix(res)
 
     def __str__(self):

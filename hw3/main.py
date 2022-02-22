@@ -29,7 +29,26 @@ def medium_artifacts():
     res_matmul.write_to_file('artifacts/medium/matrix@.txt')
 
 
+def hard_artifacts():
+    A = Matrix([[2, 3], [9, 4]])
+    C = Matrix([[8, 6], [3, 1]])
+    B = Matrix([[1, 2], [3, 4]])
+    D = Matrix([[1, 2], [3, 4]])
+    AB = A @ B
+    C._mul_cache = {}
+    CD = C @ D
+    A.write_to_file('artifacts/hard/A.txt')
+    B.write_to_file('artifacts/hard/B.txt')
+    C.write_to_file('artifacts/hard/C.txt')
+    D.write_to_file('artifacts/hard/D.txt')
+    AB.write_to_file('artifacts/hard/AB.txt')
+    CD.write_to_file('artifacts/hard/CD.txt')
+    with open('artifacts/hard/hash.txt', 'w') as fp:
+        fp.write("Hash AB: " + str(AB.__hash__()) + '\n' + "Hash CD: " + str(CD.__hash__()))
+
+
 if __name__ == '__main__':
     np.random.seed(0)
     easy_artifacts()
     medium_artifacts()
+    hard_artifacts()
